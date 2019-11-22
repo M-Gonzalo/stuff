@@ -1,0 +1,43 @@
+clear
+
+time (
+echo "#########################################"
+echo "Cleaning up previous builds..."
+
+rm -rf precom*
+
+echo "Done!"
+echo "#########################################"
+echo "Downloading latest sources now"
+wget https://github.com/schnaader/precomp-cpp/archive/multithreaded_reconstruction.zip
+
+echo "#########################################"
+echo "Unzipping..."
+7z x multithreaded_reconstruction.zip
+
+echo "Done!"
+echo "#########################################"
+echo "Building binary..."
+cd precomp-cpp-multithreaded_reconstruction
+
+export CC=/usr/bin/clang
+export CXX=/usr/bin/clang++
+time (
+cmake -DCMAKE_BUILD_TYPE=Release .
+make -j8
+)
+
+cd ..
+
+echo "Build complete"
+echo "#########################################"
+
+# echo -n "Instalar como: "
+# read x
+# sudo mv ./precomp-cpp-master/precomp /usr/bin/$x
+)
+sudo cp ./precomp-cpp-multithreaded_reconstruction/precomp /usr/bin/mtprecomp
+
+mtprecomp
+
+cd ..
